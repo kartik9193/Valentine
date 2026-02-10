@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap');
+
+        body {
+            background-color: #fce4ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            z-index: 10;
+        }
+
+        #gifContainer {
+            height: 200px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #bubuGif {
+            max-height: 100%;
+            border-radius: 15px;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d81b60;
+            font-size: 2.2rem;
+            margin: 10px 0;
+        }
+
+        #bubuText {
+            font-weight: 600;
+            color: #880e4f;
+            min-height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        #yesBtn { background-color: #ff4081; color: white; }
+        #noBtn { background-color: #f06292; color: white; }
+
+        .heart {
+            position: absolute;
+            color: #ff80ab;
+            font-size: 20px;
+            animation: float 4s linear infinite;
+            top: -10%;
+        }
+
+        @keyframes float {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="gifContainer">
+            <img id="bubuGif" src="main.gif" alt="Bubu Dudu">
+        </div>
+        
+        <h1 id="mainHeading">Will you be my Valentine?</h1>
+        <p id="bubuText">Dudu is waiting for your answer... 🥺</p>
+        
+        <div class="btn-group">
+            <button id="yesBtn" onclick="celebrate()">YES</button>
+            <button id="noBtn" onclick="handleNo()">NO</button>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        const phrases = [
+            "Are you sure? Bubu will be sad...",
+            "Soch le, ek bar fir. Dudu is crying!",
+            "Yeh kya baat hui? Bubu is getting angry!",
+            "Arre, thoda or soch le... Dudu is biting!",
+            "No, you can't say no. Bubu says NO!"
+        ];
+
+        // These correspond to the filenames you will upload
+        const gifs = ["sad.gif", "crying.gif", "angry.gif", "bite.gif", "kick.gif"];
+
+        function handleNo() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const gif = document.getElementById('bubuGif');
+            const bubuText = document.getElementById('bubuText');
+
+            if (noCount < phrases.length) {
+                noBtn.innerText = phrases[noCount];
+                bubuText.innerText = phrases[noCount];
+                gif.src = gifs[noCount];
+
+                let scale = 1 + (noCount * 0.15);
+                if (scale < 1.8) yesBtn.style.transform = `scale(${scale})`;
+                noCount++;
+            } else {
+                noBtn.style.display = 'none';
+            }
+        }
+
+        function celebrate() {
+            document.getElementById('mainHeading').innerText = "Yay! See you on the 14th! 🥰";
+            document.getElementById('bubuText').innerText = "Knew you'd say yes! ❤️";
+            document.getElementById('bubuGif').src = "kiss.gif";
+            document.querySelector('.btn-group').style.display = 'none';
+            setInterval(createHeart, 150);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
